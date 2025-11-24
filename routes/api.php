@@ -14,3 +14,7 @@ Route::apiResource('/categorias', CategoriaController::class);
 Route::get('/login', function () {
     return response()->json(['error' => 'Unauthenticated'], 401);
 })->name('login');
+
+
+# Este codigo hace lo siguiente:
+Route::get('/categorias', [CategoriaController::class, 'index']);
