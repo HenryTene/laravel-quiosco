@@ -24,3 +24,4 @@ Route::get('/productos', [ProductoController::class, 'index']);
 
 // Autenticacion
 Route::post('/registro', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
