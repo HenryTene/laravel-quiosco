@@ -47,5 +47,16 @@ class AuthController extends Controller
             'user' => $user
         ];
     }
-    public function logout(Request $request) {}
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+
+        if (method_exists($user->currentAccessToken(), 'delete')) {
+            $user->currentAccessToken()->delete();
+        } else {
+            Auth::guard('web')->logout();
+        }
+
+        return ['user' => null];
+    }
 }
