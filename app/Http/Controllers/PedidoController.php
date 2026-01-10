@@ -20,11 +20,11 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
-        // Almacenar un pedido
-        $pedido = new Pedido;
-        $pedido->user_id = $request->user()->id;
-        $pedido->total = $request->total;
-        $pedido->save();
+        // // Almacenar un pedido
+        // $pedido = new Pedido;
+        // $pedido->user_id = $request->user()->id;
+        // $pedido->total = $request->total;
+        // $pedido->save();
 
         return [
             'message' => 'Pedido realizado correctamente, estará listo en unos minutos'
