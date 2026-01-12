@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Pedido;
 use Illuminate\Http\Request;
+use App\Models\PedidoProducto;
 use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
@@ -26,6 +28,30 @@ class PedidoController extends Controller
         $pedido->user_id = Auth::user()->id;
         $pedido->total = $request->total;
         $pedido->save();
+
+        // Obtener el ID del pedido
+        $id = $pedido->id;
+
+        // Obtener los productos del pedido
+        $productos = $request->productos;
+
+        // Formatear un arreglo
+        $pedido_producto = [];
+        foreach ($productos as $producto) {
+            $pedido_producto[] = [
+                'pedido_id' => $id,
+                'producto_id' => $producto['id'],
+                'cantidad' => $producto['cantidad'],
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+        }
+
+        // Almacenar en la BD
+        PedidoProducto::insert($pedido_producto);
+
+        // Eliminar los productos del carrito
+        $request->session()->forget('pedido');
 
         return [
             'message' => 'Pedido realizado correctamente, estará listo en unos minutos'
